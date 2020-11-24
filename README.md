@@ -6,7 +6,7 @@
 
 The task of this second tutorial is to control the velocity according to obstacles in the direction of movment.
 
-It can stop when the obstacle distance is less than 0.4m and will slow down when the distance is smaller than 1.2m using propotional velocity:
+It can stop when the obstacle distance is less than `0.4m` and will slow down when the distance is smaller than `1.2m` using propotional velocity:
 - If you want to change the default parameter, just change it in the launch file /launch/velocity_controller.launch
 
 But there are still two problems when I'm doing experiment:
@@ -24,6 +24,9 @@ The process of the algorithm it is as fllowing:
 In order to accomplish the mentioned functions, I create a package called pcimr_tutorial_02. It contains a subscriber and a publisher:
 1. subscribes input/cmd_vel(here we remap the topicname of teleop keyboard publisher from /cmd_vel to /input/cmd_vel in order to prevent chaos)
 2. publishes command to /pioneer/cmd_vel if the robot is p3dx or to /cma_vel if the robot is rto-1
+
+To use the sensor information, I transform it to relative x,y position to sensor in order to better calculate the distance between obstacles and robot.
+- It is implemented in function ```get_distance()```
 
 Launch the simulation by running:
 
