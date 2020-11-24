@@ -39,7 +39,7 @@ Or if you want to use p3dx robot, you have to run the following first:
 ### Questions
 
 1. Does your controller work out of the box? Can you hit walls?
-  The controller works out of box. It will not hit the wall if the system is updating at supposed frequency.
+- The controller works out of box for pioneer robot. It will not hit the wall if the system is updating at supposed frequency. But it will not work for rto-1(omidirectional robot). If we do not update the algorithm, rto-1 will hit the wall if it moves towards left or right.
 2. Update your controller so that it works with both, differential and omnidirectional drive.
 - Since omidirectional robot can move in every direction, the velocity consists of x and y velocity. So additional constrain in y direcition should be add to avoid collision in y direction.
 - Another problem is that the sensor can only detect a range of 230 degree, It can hardly see the situation in the back, so I just set the backward velocity to 0, to prevent collision.
