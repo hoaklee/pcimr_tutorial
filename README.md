@@ -25,6 +25,8 @@ In order to accomplish the mentioned functions, I create a package called pcimr_
 1. subscribes input/cmd_vel(here we remap the topicname of teleop keyboard publisher from /cmd_vel to /input/cmd_vel in order to prevent chaos)
 2. publishes command to /pioneer/cmd_vel if the robot is p3dx or to /cma_vel if the robot is rto-1
 
+To use the sensor information, I transform it to relative x,y position to sensor in order to better calculate the distance between obstacles and robot.
+
 Launch the simulation by running:
 
     roslaunch pcimr_tutorial_02 velocity_controller.launch
