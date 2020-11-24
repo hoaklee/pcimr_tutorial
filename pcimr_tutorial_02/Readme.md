@@ -43,3 +43,4 @@ Or if you want to use p3dx robot, you have to run the following first:
 2. Update your controller so that it works with both, differential and omnidirectional drive.
 - Since omidirectional robot can move in every direction, the velocity consists of x and y velocity. So additional constrain in y direcition should be add to avoid collision in y direction.
 - Another problem is that the sensor can only detect a range of 230 degree, It can hardly see the situation in the back, so I just set the backward velocity to 0, to prevent collision.
+- Just figure out another solution to omidirectional robot, and will try to implement this method. If received command velocity is not in x direction, can first roatate the robot to this direction and then move forward. This can even work with small laser angle.
