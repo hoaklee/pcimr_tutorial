@@ -26,7 +26,7 @@ In order to accomplish the mentioned functions, I create a package called pcimr_
 2. publishes command to /pioneer/cmd_vel if the robot is p3dx or to /cma_vel if the robot is rto-1
 
 To use the sensor information, I transform it to relative x,y position to sensor in order to better calculate the distance between obstacles and robot.
-- It is implemented in function get_distance()
+- It is implemented in function /get_distance()
 
 Launch the simulation by running:
 
