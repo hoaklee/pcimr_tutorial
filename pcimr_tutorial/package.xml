@@ -4,12 +4,12 @@
   <version>0.0.0</version>
   <description>The pcimr_tutorial package</description>
 
-  <author email="robin.dietrich@tum.de">Robin Dietrich</author>
-  <maintainer email="robin.dietrich@tum.de">Robin Dietrich</maintainer>
+  <author email="Qianhao.li@tum.de">Li Qianhao</author>
+  <maintainer email="Qianhao.li@tum.de">Li Qianhao</maintainer>
 
   <license>BSD</license>
 
-  <!-- <url type="website">http://wiki.ros.org/pcimr_tutorial</url> -->
+  <!-- <url type="website">https://github.com/hoaklee/pcimr_tutorial/tree/tutorial-03> -->
 
   <buildtool_depend>catkin</buildtool_depend>
 
