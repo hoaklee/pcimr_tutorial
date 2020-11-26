@@ -120,8 +120,8 @@ class velocity_controller:
            # publish adjusted command
            self.move_pub.publish(self.move_command_pub)
 
-           # if rate:
-           #     rospy.sleep(1/rate)
+           if rate:
+               rospy.sleep(1/rate)
 
 if __name__ == "__main__":
    rospy.init_node('Velocity_Controller')
