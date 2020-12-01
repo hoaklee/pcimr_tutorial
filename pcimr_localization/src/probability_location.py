@@ -33,8 +33,8 @@ class probability_location:
         self.map_prob = np.zeros((self.map_height, self.map_height))
         # self.move_prob = rospy.get_param('~/robot_move_probabilities', [0.7, 0.1, 0.1, 0.0, 0.1])
         self.move_prob = rospy.get_param('~/robot_move_probabilities', [0.9, 0.04, 0.04, 0.0, 0.02])
-        self.random = rospy.get_param('~/rand_ini_pos', True)
-        # self.random = rospy.get_param('~/rand_ini_pos', False)
+        # self.random = rospy.get_param('~/rand_ini_pos', True)
+        self.random = rospy.get_param('~/rand_ini_pos', False)
 
         # initialize data type
         self.map_input = OccupancyGrid()
