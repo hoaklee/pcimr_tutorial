@@ -17,7 +17,7 @@ The reusult of algorithm can be seen in the picture below:
 
 To implement localization function, I create a package `/pcimr_localization` package, which includes necessary functions of doing localization.
 
-The node subscribes to 4 publisher and pulishes 3 messages:
+The node subscribes to 4 publishers and pulishes 3 messages:
   - Subscribers:
       - `/map_sub`: OccupancyGrid from `/map`
       - `/sensor_sub`: LaserScan from `/scan`
