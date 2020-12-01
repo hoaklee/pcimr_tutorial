@@ -31,8 +31,10 @@ class probability_location:
         self.pos_right = 0.8
         self.pos_diffone = 0.1
         self.map_prob = np.zeros((self.map_height, self.map_height))
-        self.move_prob = [0.7, 0.1, 0.1, 0.0, 0.1]
-        # self.move_prob = rospy.get_param('~/robot_move_probabilities')
+        # self.move_prob = rospy.get_param('~/robot_move_probabilities', [0.7, 0.1, 0.1, 0.0, 0.1])
+        self.move_prob = rospy.get_param('~/robot_move_probabilities', [0.9, 0.04, 0.04, 0.0, 0.02])
+        self.random = rospy.get_param('~/rand_ini_pos', True)
+        # self.random = rospy.get_param('~/rand_ini_pos', False)
 
         # initialize data type
         self.map_input = OccupancyGrid()
@@ -264,10 +266,11 @@ class probability_location:
         self.marker_pub.publish(self.pub_ego_marker)
 
         # Publish probability map to /robot_pos_map
-        grid_map = np.copy(self.map_prob)
-        grid_map *= 50
-        self.pub_grid_map.data = grid_map.flatten().astype(int).tolist()
-        # self.pub_grid_map.data = grid_map.tolist()
+        grid_map = self.map_prob
+        nomal = 1/sum(sum(grid_map))
+        grid_map *= nomal * 100
+        self.pub_grid_map.data = grid_map.astype(int)
+        self.pub_grid_map.data = np.array(self.pub_grid_map.data.flatten())
         self.grid_pub.publish(self.pub_grid_map)
 
     def run(self, rate: float = 1):
@@ -281,10 +284,11 @@ class probability_location:
 
         while not rospy.is_shutdown():
 
-            # determine if it reaches the goal
-            if self.goal_reached:
-                rospy.wait_for_message('/scan', LaserScan)
-                self.pos_correct()
+            if self.random:
+                # determine if it reaches the goal
+                if self.goal_reached:
+                    rospy.wait_for_message('/scan', LaserScan)
+                    self.pos_correct()
 
             rospy.wait_for_message('/move', String)
             rospy.wait_for_message('/scan', LaserScan)
@@ -292,13 +296,14 @@ class probability_location:
             self.pos_predict()
             self.pos_correct()
 
-            # if it reach the goal, set goal_reached to True
-            pos_x = self.pub_robot_pos.x
-            pos_y = self.pub_robot_pos.y
-            if pos_x == self.goal_x and pos_y == self.goal_y:
-                self.goal_reached = True
-            else:
-                self.goal_reached = False
+            if self.random:
+                # if it reach the goal, set goal_reached to True
+                pos_x = self.pub_robot_pos.x
+                pos_y = self.pub_robot_pos.y
+                if pos_x == self.goal_x and pos_y == self.goal_y:
+                    self.goal_reached = True
+                else:
+                    self.goal_reached = False
 
 if __name__ == "__main__":
     # initialize probability_location node
