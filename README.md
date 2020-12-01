@@ -12,6 +12,8 @@ To visualize the probability, you can simply choose topic `/robot_pos_map` for `
 
 The reusult of algorithm can be seen in the picture below:
 
+![image](https://github.com/hoaklee/pcimr_tutorial/blob/pcimr_tutorial_03/resources/imgs/map_grid_with_probability.png)
+
 ---
 ### Code Overview
 
