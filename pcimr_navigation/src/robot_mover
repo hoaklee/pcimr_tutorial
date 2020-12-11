@@ -85,7 +85,7 @@ class RobotMover:
             rospy.loginfo('Goal reached! Stop moving now.')
             self.moving = False
             return None
-        
+
         next_x = self.path.poses[i+1].pose.position.x
         next_y = self.path.poses[i+1].pose.position.y
 
@@ -101,7 +101,7 @@ class RobotMover:
             move_id = 'E'
         elif cartesian_move == [-1,0]:
             move_id = 'W'
-        
+
         return move_id
 
 
