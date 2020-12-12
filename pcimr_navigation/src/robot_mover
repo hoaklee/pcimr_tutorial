@@ -113,7 +113,7 @@ class RobotMover:
         """
 
         while not rospy.is_shutdown():
-            
+
             if self.path is None or self.robot_pos is None or not self.moving:
                 if rate:
                     rospy.sleep(1/rate)

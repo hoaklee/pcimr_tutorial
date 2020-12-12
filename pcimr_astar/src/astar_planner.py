@@ -71,10 +71,9 @@ class Astar_planner:
         self.msg_path_marker.color.b = 1.0
         self.msg_path_marker.pose.orientation = Quaternion(0, 0, 0, 1)
 
-        # self.msg_path = Path()
-        # # print(self.msg_path)
-        # self.msg_path.header.stamp = rospy.Time.now()
-        # self.msg_path.header.frame_id = "path"
+        self.msg_path = Path()
+        self.msg_path.header.stamp = rospy.Time.now()
+        self.msg_path.header.frame_id = "path"
 
     # callback of position
     def callback_pos(self, Point):
@@ -239,17 +238,20 @@ class Astar_planner:
                 self.pub_goal.publish(self.msg_goal_marker)
 
                 # publish plan
-                self.msg_goal_marker.points.clear()
                 for p in path:
                     self.msg_path_marker.points.append(Point(p[0]+0.5, p[1]+0.5, 0))
                 self.pub_plan.publish(self.msg_path_marker)
+                self.msg_goal_marker.points.clear()
 
-                # # publish path
-                # self.msg_path.poses.pose.position.clear()
-                # for pa in path:
-                #     self.msg_path.poses.pose.position.x.append(pa[0])
-                #     self.msg_path.poses.pose.position.x.append(pa[1])
-                # self.pub_path.publish(self.msg_path, latch=True)
+                # publish path
+                for pa in path:
+                    pose = PoseStamped()
+                    pose.pose.position.x = pa[0]
+                    pose.pose.position.y = pa[1]
+                    self.msg_path.poses.append(pose)
+                # if latch:
+                self.pub_path.publish(self.msg_path)
+                self.msg_path.poses.clear()
 
             else:
                 rospy.loginfo('Goal is not valid')
