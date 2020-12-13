@@ -4,56 +4,44 @@
 
 ### Introduction
 
-The purpose of this tutorial is to demonstrate an understanding of search algorithms, i.e. global path planners and how to implement one efficiently. You can solve the tasks using either C++ or Python.
-After completing this exercise you should be able to
-- understand and implement a global path planner for mobile robots
-- understand how A* works and how it is implemented, including to know 
-  - why A* is more efficient than e.g. Dijkstra 
-  - what a heuristic is
+This is the implement of *pcimr_tutorial_05 -- Path Planning & Control*.
 
-If you have trouble understanding the code or writing your own, please have a look at the [tutorials](http://wiki.ros.org/ROS/Tutorials)  again.
+In this tutorial, the task is to implement a package, which is supposed to find a path from start point to goal point using a star search.
+
+The result of a star search is visualized in *rviz*.
 
 
 ---
 ### Code Overview
 
-Visit the provided github repository and have a look at the code for the exercise by checking out the branch *tutorial-05*. You will find the same simulator used in previous exercises but with a few modifications. You can choose to work with any of the worlds provided, e.g. the one from tutorial-03, shown in Fig.1.
+The package `/pcimr_astar` was created and includes neccessary function of an a star search.
 
-This time we provide a launch file in the *pcimr_navigation* package
+The nodes `/pcimr_astar` subscribes to 3 publishers and publishes 3 messages:
+
+- Subscribers:
+  - `/sub_pos`: *Point* from `/robot_pos`
+  - `/sub_map`: *OccupancyGrid* from `/map`
+  - `/sub_goal`: *PoseStamped* from `/move_base_simple/goal`
+- Publisheres:
+  - `/pub_path`: *Path* to `/global_path`
+  - `/pub_plan`: *Marker* to `/visualization/plan`
+  - `/pub_goal`: *Marker* to `/visualization/goal`
+
+The simulation can be started by simply run:
 
     roslaunch pcimr_navigation navigation.launch
 
-for starting up the simulation and a mover node, which listens to a path on the */global_path* topic and publishes on */move*.
-
-The simulator publishes a map as well as the robots position and its sensor readings (not necessary for this exercise). 
-
-
-
-<table style="margin-left: auto; margin-right: auto; table-layout: fixed; width: 100%">
-  <tr>
-    <td style="width: 48%;"> <img src="resources/imgs/map_grid_unknown.png"></td>
-    <td style="width: 48%;"> <img src="resources/imgs/map_with-path_02.png"></td>
-  </tr>
-  <tr>
-    <td style="width: 48%;" valign="top"> <b>Fig.1:</b> Grid-world for this exercise, grey pixels are free space, black ones are occupied and grey/green ones are unknown.
-    </td>
-    <td style="width: 48%;" valign="top">  <b>Fig.2:</b> An example path calculated for the start (green)/goal (red).
-    </td>
-  </tr>
-</table>
-
-
-
 ---
-### Exercise 
+### Main idea
 
+The main structrue of this algorithm can be divided into 3 parts:
 
-Your task is to implement the A* algorithm from this lecture. You will find a lot of implementations online, please still try to implement it on your own. 
+  1. For each position of ego point, we first find the possible next points.
+  2. Then calculate the heutistic cost `Node.h`, actual cost from start point to this point `Node.g` and the sum of them `Node.f`.
+  3. After calculation, store all these points to a list called `open_list`.
+  4. Find the points in `open_list` with minimal f value and store this point to `closed_list`.
+  5. Start step *1* from the last point in `closed_list` until reaches the goal.
+  
+---
+### Additional information
 
-Write a node in the pcimr_navigation package that listens to the robot position and the map as well as a goal published by rviz. With this information you calculate a path from the robots current position to the goal and publish it.
-
-1. Fork and clone the updated ROS code, then checkout the new branch (tutorial-05). Create your own branch and start coding!
-2. Now, implement a ROS node with two subscribers and three publishers.
-   1. Subscribers receive the robot position (/robot_pos) and map (/map)from the simulator node and the goal (/move_base_simple/goal) from rviz (you need to discretize this goal and check if its valid).
-   2. The publisher sends a nav_msgs/Path message on the topic /global_path including all cells the robot needs to pass from its current location to the goal. Publish this path only once with the option latch=True. The other two publishers, publish a [visualization_msgs/Marker](http://wiki.ros.org/rviz/DisplayTypes/Marker) for the goal (Cube) and the path (Line Strip).
-   3. Implement the A* algorithm as efficiently as possible. Make sure that the algorithm always finds a path.
