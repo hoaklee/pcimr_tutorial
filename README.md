@@ -34,7 +34,7 @@ The simulation can be started by simply run:
 ---
 ### Main idea
 
-The main structrue of this algorithm can be divided into 3 parts:
+The main structrue of this algorithm can be divided into 5 parts:
 
   1. For each position of ego point, we first find the possible next points.
   2. Then calculate the heutistic cost `Node.h`, actual cost from start point to this point `Node.g` and the sum of them `Node.f`.
