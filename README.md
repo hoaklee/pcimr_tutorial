@@ -10,6 +10,7 @@ In this tutorial, the task is to implement a package, which is supposed to find 
 
 The result of a star search is visualized in *rviz*.
 
+![image](https://github.com/hoaklee/pcimr_tutorial/blob/pcimr_tutorial_05/resources/imgs/result_astar.png)
 
 ---
 ### Code Overview
