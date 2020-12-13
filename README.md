@@ -46,3 +46,6 @@ The main structrue of this algorithm can be divided into 5 parts:
 ---
 ### Additional information
 
+1. One thing important to start simulation: you have to select a goal through rviz yourself.
+   - If the goal is not valid(in the boundary or out of range), you will get the information `Goal is not valid`.
+   - If the goal is valid, the ego point(green point) will start moving.
