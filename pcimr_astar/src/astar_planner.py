@@ -233,15 +233,16 @@ class Astar_planner:
                 path = self.astar(start, end)
 
                 # publish goal
+                self.msg_goal_marker.points.clear()
                 self.msg_goal_marker.pose.position.x = end[0] + 0.5
                 self.msg_goal_marker.pose.position.y = end[1] + 0.5
                 self.pub_goal.publish(self.msg_goal_marker)
 
                 # publish plan
+                self.msg_path_marker.points.clear()
                 for p in path:
                     self.msg_path_marker.points.append(Point(p[0]+0.5, p[1]+0.5, 0))
                 self.pub_plan.publish(self.msg_path_marker)
-                self.msg_goal_marker.points.clear()
 
                 # publish path
                 for pa in path:
